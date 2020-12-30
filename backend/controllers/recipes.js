@@ -48,10 +48,22 @@ recipes.get('/:id', async (req, res) => {
         res.status(400).json(error)
     }
 })
+
+// UPDATE - Update a resource
+recipes.put('/:id', async (req, res) => {
+    try {
+        const updatedRecipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, { new: true }
+        );
+        res.status(200).json(updatedRecipe);
+    } catch (error) {
+        res.status(400).json(error);
+    }
+});
+
+
 /*
 Index - display all of a list of resources
 Delete - Destroy a resource
-Update - Update a resource
 */
 
 module.exports = recipes;
