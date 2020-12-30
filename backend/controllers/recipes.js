@@ -60,10 +60,17 @@ recipes.put('/:id', async (req, res) => {
     }
 });
 
+// DELETE - Destroy a resource
+recipes.delete('/:id', async (req,res) => {
+    try {
+        const deletedRecipe = await Recipe.findByIdAndRemove(req.params.id);
+        res.status(200).json(deletedRecipe);
+    } catch (error) {
+        res.status(400).json(error)
+    }
+})
 
-/*
-Index - display all of a list of resources
-Delete - Destroy a resource
-*/
+
+
 
 module.exports = recipes;
