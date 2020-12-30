@@ -1,8 +1,57 @@
 const express = require('express');
 const recipes = express.Router();
+const Recipe = require('../models/recipes');
 
-recipes.get('/', (req, res) => {
-    res.send('index');
+
+
+// // SEARCH
+
+// holidays.post('/search-by/:key', async (req, res) => {
+//     try {
+//       const searchQuery = new RegExp(req.body.searchQuery, 'gi')
+//       const filteredHolidays = await Holiday.find({ [req.params.key]: searchQuery })
+//       res.status(200).json(filteredHolidays)
+//     } catch (error){
+//       res.status(400).json(error)
+//     }
+//   })
+
+// CREATE - Create a new resource
+recipes.post('/', async (req, res) => {
+    // the code in the try block will run if the errorinn the catch block runs
+    try {
+        // using await the createdRecipe will be assigned when the promise resolves 
+        const createdRecipe = await Recipe.create(req.body);
+        // status sets the status code then send a json response 
+        res.status(200).json(createdRecipe);
+    } catch (error) {
+        // sets the status code and returns the error as json
+        res.status(400).json(error);
+    }
 });
+
+// READ - retrieve entire list
+recipes.get('/', async (req,res) => {
+    try {
+        const foundRecipes = await Recipe.find({});
+        res.status(200).json(foundRecipes);
+    } catch (error) {
+        res.status(400).json(error);
+    }
+})
+// SHOW - display an individual resource
+recipes.get('/:id', async (req, res) => {
+    try {
+        const showRecipe = await Recipe.findById(req.params.id)
+        res.status(200).json(showRecipe)
+    } catch (error) {
+        res.status(400).json(error)
+    }
+})
+/*
+Index - display all of a list of resources
+Delete - Destroy a resource
+Update - Update a resource
+*/
 
 module.exports = recipes;
