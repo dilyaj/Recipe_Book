@@ -4,17 +4,16 @@ const Recipe = require('../models/recipes');
 
 
 
-// // SEARCH
-
-// holidays.post('/search-by/:key', async (req, res) => {
-//     try {
-//       const searchQuery = new RegExp(req.body.searchQuery, 'gi')
-//       const filteredHolidays = await Holiday.find({ [req.params.key]: searchQuery })
-//       res.status(200).json(filteredHolidays)
-//     } catch (error){
-//       res.status(400).json(error)
-//     }
-//   })
+// SEARCH
+recipes.post('/search-by/:key', async (req, res) => {
+    try {
+      const searchQuery = new RegExp(req.body.searchQuery, 'gi')
+      const filteredRecipes = await Recipe.find({ [req.params.key]: searchQuery })
+      res.status(200).json(filteredRecipes)
+    } catch (error){
+      res.status(400).json(error)
+    }
+})
 
 // CREATE - Create a new resource
 recipes.post('/', async (req, res) => {
@@ -30,7 +29,7 @@ recipes.post('/', async (req, res) => {
     }
 });
 
-// READ - retrieve entire list
+// index - retrieve entire list
 recipes.get('/', async (req,res) => {
     try {
         const foundRecipes = await Recipe.find({});
