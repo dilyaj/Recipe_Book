@@ -3,15 +3,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors')
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const recipesController = require('./controllers/recipes.js');
 const MONGOURI = process.env.MONGODB_URI;
 const whitelist = [
-    'http://localhost:3001'
+    'http://localhost:3000','localhost:3001'
 ];
 const corsOptions = {
     origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
+        /* TODO: Remove !origin in production */
+        if (whitelist.indexOf(origin) !== -1 || !origin) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
@@ -42,5 +43,5 @@ mongoose.connection.once('open', () => {
 app.use('/recipes', recipesController);
 
 app.listen(PORT, () => {
-    console.log(PORT, 'recipes on 3000');
+    console.log(PORT, `recipes on ${PORT}`);
 });

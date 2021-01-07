@@ -15,7 +15,7 @@ export default (props) => {
       }
     )
     try {
-      const response = await fetch(`http://localhost:3000/recipes/search-by/ingredients`, {
+      const response = await fetch(`http://localhost:3001/recipes/search-by/ingredients`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json'
@@ -30,10 +30,11 @@ export default (props) => {
     }
   }
 
+
   // Read 
   const fetchRecipes = async () => {
     try {
-      const response = await fetch('http://localhost:3000/recipes');
+      const response = await fetch('http://localhost:3001/recipes');
       const data = await response.json();
       setRecipes(data)
     } catch (error) {
@@ -41,12 +42,32 @@ export default (props) => {
     }
   }
   
+  const getRecipe = async (id) => {
+    try {
+      debugger;
+      // const response = await fetch(`http://localhost:3001/recipes/${id}`, {
+      //   method: 'GET',
+      //   headers: {
+      //     'Content-type': 'application/json',
+      //   }
+      // })
+      //const data = await response.json();
+      //const filteredRecipes = recipes.filter(recipe => recipe._id === data.//_id)
+      const filteredRecipes = recipes.filter(recipe => recipe._id === id)
+      setRecipes(filteredRecipes);
+    } catch(error) {
+      console.error(error)
+    }
+  }
+  useEffect(() => {
+    fetchRecipes();
+  }, [])
 
 
   // Delete
   const deleteRecipe = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/recipes/${id}`, {
+      const response = await fetch(`http://localhost:3001/recipes/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-type': 'application/json',
@@ -72,7 +93,7 @@ export default (props) => {
           <input type="text" className="form-control" ref={ingredientsInput} />
           <input type="submit" value="Search for Recipe"/>
         </form>
-        <button onClick={fetchRecipes}> get recipes</button>
+        {/* <button onClick={fetchRecipes}>get recipes</button> */}
           <ul>
           {
             recipes.map(recipe => {
@@ -80,9 +101,9 @@ export default (props) => {
               <li key={recipe._id}>{recipe.name}<br/>
               <button onClick={
                 (event) => {
-                  searchRecipes(recipe._id)
+                  getRecipe(recipe._id)
                 }
-              }> {recipe.name} </button>
+              }>get recipe</button>
               </li>
               )
             })
