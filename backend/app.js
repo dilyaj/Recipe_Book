@@ -6,10 +6,22 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const recipesController = require('./controllers/recipes.js');
 const MONGOURI = process.env.MONGODB_URI;
+const whitelist = [
+    'http://localhost:3001'
+];
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+};
 
 //middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 // error/ disconnection
 mongoose.connect(MONGOURI, {
