@@ -45,14 +45,6 @@ export default (props) => {
   
   const getRecipe = async (id) => {
     try {
-      // const response = await fetch(`http://localhost:3001/recipes/${id}`, {
-      //   method: 'GET',
-      //   headers: {
-      //     'Content-type': 'application/json',
-      //   }
-      // })
-      //const data = await response.json();
-      //const filteredRecipes = recipes.filter(recipe => recipe._id === data.//_id)
       const filteredRecipes = recipes.filter(recipe => recipe._id === id)
       setRecipes(filteredRecipes);
     } catch(error) {
@@ -87,18 +79,14 @@ export default (props) => {
           <input type="text" className="form-control" ref={ingredientsInput} />
           <input type="submit" value="Search for Recipe"/>
         </form>
-        {/* <button onClick={fetchRecipes}>get recipes</button> */}
+
           <ul>
           {
             recipes.map(recipe => {
               return (
-              <p key={recipe._id}>{recipe.name}<br/>
-              <button onClick={
-                (event) => {
-                  getRecipe(recipe.directions)
-                }
-              }>get recipe</button>
-              </p>
+              
+              <h5 className="card-title" key={recipe._id}>{recipe.name}<br/>
+              <p className="card-text">{recipe.description}</p></h5>
               )
             })
           }
