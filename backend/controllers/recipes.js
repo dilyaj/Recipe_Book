@@ -15,9 +15,10 @@ recipes.post('/search-by/:key', async (req, res) => {
     }
 })
 
+
 // CREATE - Create a new resource
 recipes.post('/', async (req, res) => {
-    // the code in the try block will run if the errorinn the catch block runs
+    // the code in the try block will run if the error in the catch block runs
     try {
         // using await the createdRecipe will be assigned when the promise resolves 
         const createdRecipe = await Recipe.create(req.body);
