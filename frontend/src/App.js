@@ -34,6 +34,7 @@ export default (props) => {
   // Read 
   const fetchRecipes = async () => {
     try {
+      debugger;
       const response = await fetch('http://localhost:3001/recipes');
       const data = await response.json();
       setRecipes(data)
@@ -44,7 +45,6 @@ export default (props) => {
   
   const getRecipe = async (id) => {
     try {
-      debugger;
       // const response = await fetch(`http://localhost:3001/recipes/${id}`, {
       //   method: 'GET',
       //   headers: {
@@ -59,9 +59,6 @@ export default (props) => {
       console.error(error)
     }
   }
-  useEffect(() => {
-    fetchRecipes();
-  }, [])
 
 
   // Delete
@@ -80,9 +77,6 @@ export default (props) => {
       console.error(error)
     }
   }
-  useEffect(() => {
-    fetchRecipes();
-  }, [])
   return (
     <div className="App">
       <header className="App-header" align="center">
@@ -98,13 +92,13 @@ export default (props) => {
           {
             recipes.map(recipe => {
               return (
-              <li key={recipe._id}>{recipe.name}<br/>
+              <p key={recipe._id}>{recipe.name}<br/>
               <button onClick={
                 (event) => {
-                  getRecipe(recipe._id)
+                  getRecipe(recipe.directions)
                 }
               }>get recipe</button>
-              </li>
+              </p>
               )
             })
           }
